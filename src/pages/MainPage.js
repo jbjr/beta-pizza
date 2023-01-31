@@ -4,16 +4,17 @@ import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import PizzaCards from "../comp/PizzaCards";
 import NewOrderDialog from "../comp/NewOrderDialog";
+import HeaderBar from "../comp/HeaderBar";
 
 
-export default function MainPage() {
+export default function MainPage({user}) {
 
 
     const app = Realm.App.getApp('application-0-ctrvo');
-    const user = app.currentUser;
-    console.log(user.profile.email);
+    const curUser = app.currentUser;
 
     const [pizzaHolder, setPizzaHolder] = useState([]);
+
 
     useEffect(() => {
         getEntireCollection();
@@ -22,7 +23,7 @@ export default function MainPage() {
 
     async function getEntireCollection (){
         try{
-            const pizzaCollection = getPizzaCollection(user);
+            const pizzaCollection = getPizzaCollection(curUser);
             const result = await pizzaCollection.find({});
             console.log(result);
             const pizzas =[];
@@ -37,8 +38,16 @@ export default function MainPage() {
         }
     }
 
+    // Removed signout button for now
+    /*function signoutClick(){
+        curUser.logOut();
+        //await app.removeUser(curUser);
+        navigate('/');
+    }*/
+
     return(
         <Box>
+            <HeaderBar/>
             <Box sx={{backgroundColor: '#d7ccc8', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <NewOrderDialog/>
                 <PizzaCards items={pizzaHolder}/>

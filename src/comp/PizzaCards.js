@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import {useState} from "react";
 import {getOrdersCollection, getPizzaCollection} from "./helper";
 import * as Realm from "realm-web";
-import HeaderBar from "./HeaderBar";
+//import HeaderBar from "./HeaderBar";
 
 
 
@@ -58,7 +58,6 @@ export default function PizzaCards({items}){
 
     return(
         <Box sx={{boxShadow: 2}}>
-            <HeaderBar/>
             <Box sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
                 {items.map(pizza => (
                     <Card sx={{width: 300, m: 2, borderRadius: '10px', boxShadow: 5}} key={pizza.name}>
