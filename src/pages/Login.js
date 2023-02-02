@@ -1,10 +1,5 @@
 import {useState} from "react";
-import {
-    Box,
-    Button,
-    Grid,
-    TextField
-} from "@mui/material";
+import {Box, Button, Grid, TextField} from "@mui/material";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import * as Realm from "realm-web";
 import {useNavigate} from "react-router-dom";
@@ -53,7 +48,6 @@ export default function Login() {
 
     return (
         <Grid container justifyContent={"center"} alignItems={"center"} sx={{height: '100vh', backgroundColor: '#d7ccc8', backgroundSize: "cover"}}>
-
             <Grid item xs={1}></Grid>
             <Grid container spacing={0} justifyContent={"center"} alignItems={"center"} sx={{height: '90vh'}}>
                 <Box sx={{backgroundColor: 'white', borderRadius: '16px', boxShadow: 10, border: 1, display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', alignItems: 'center'}}>

@@ -2,8 +2,6 @@ import * as Realm from "realm-web";
 import {useEffect, useState} from "react";
 import {getOrdersCollection} from "../comp/helper";
 import Box from "@mui/material/Box";
-import NewOrderDialog from "../comp/NewOrderDialog";
-import PizzaCards from "../comp/PizzaCards";
 import OrderList from "../comp/OrderList";
 
 
@@ -33,28 +31,37 @@ export default function CartPage(){
     // Function that grabs currentOrder information from database
     async function getUserOrderInformation(){
         const orderCollection = getOrdersCollection(user);
-        const result = await orderCollection.findOne({status: "cart-test"});
+        const query = {
+            "user_id": user.id,
+            "status": "pending"
+        };
+        const result = await orderCollection.findOne(query);
         console.log(result);
         const orderItems = [];
         let total = 0;
-        const firstUpdate = await orderCollection.updateOne({status: "cart-test"}, {$inc: {total: total}})
+        let arrIndex = 0;
+        console.log(total);
+        const firstUpdate = await orderCollection.updateOne(query, {$set: {total: total}})
         result.item.forEach(orderItem => {
-            orderItems.push({name: orderItem.name, price: orderItem.price})
-            total = total + orderItem.price;
+            orderItems.push({name: orderItem.name, price: orderItem.price, quantity: orderItem.qty, rowId: arrIndex})
+            total = total + (orderItem.price * orderItem.qty);
+            arrIndex = arrIndex + 1;
         })
-        const totalUpdate = await orderCollection.updateOne({status: "cart-test"}, {$inc: {total: total}})
+        let roundedTotal = parseFloat(total.toFixed(2));
+        const totalUpdate = await orderCollection.updateOne(query, {$set: {total: roundedTotal}})
         console.log(totalUpdate);
-        const updatedTotal = await orderCollection.findOne({status: "cart-test"})
-        //nonArrItems.push({user_id: result.user_id, total: updatedTotal});
+        const updated = await orderCollection.findOne(query)
         console.log(orderItems);
+        console.log(updated);
+        console.log(total);
         setOrder(orderItems);
         setId(result.user_id)
-        setCartTotal(total);
+        setCartTotal(roundedTotal);
     }
 
     return(
         <Box>
-            <Box sx={{backgroundColor: 'white', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <Box sx={{height: '100vh', backgroundColor: '#d7ccc8', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <OrderList items={currentOrder} detailsId={userId} detailsTotal={cartTotal}/>
             </Box>
         </Box>
