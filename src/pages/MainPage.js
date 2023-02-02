@@ -4,7 +4,6 @@ import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import PizzaCards from "../comp/PizzaCards";
 import NewOrderDialog from "../comp/NewOrderDialog";
-import HeaderBar from "../comp/HeaderBar";
 
 
 export default function MainPage({user}) {
@@ -15,13 +14,12 @@ export default function MainPage({user}) {
 
     const [pizzaHolder, setPizzaHolder] = useState([]);
 
-
     useEffect(() => {
-        getEntireCollection();
+        loadPizzaCards();
 
     }, []);
 
-    async function getEntireCollection (){
+    async function loadPizzaCards (){
         try{
             const pizzaCollection = getPizzaCollection(curUser);
             const result = await pizzaCollection.find({});
@@ -47,10 +45,9 @@ export default function MainPage({user}) {
 
     return(
         <Box>
-            <HeaderBar/>
             <Box sx={{backgroundColor: '#d7ccc8', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <NewOrderDialog/>
-                <PizzaCards items={pizzaHolder}/>
+                <PizzaCards items={pizzaHolder}></PizzaCards>
             </Box>
         </Box>
     )

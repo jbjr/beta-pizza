@@ -24,7 +24,9 @@ export default function HeaderBar(){
                 <Typography variant={"h6"} sx={{flexGrow: 1, color: '#5d4037', fontWeight: 'bold'}}>
                     Specialty Pizzas
                 </Typography>
-                <Button onClick={toCart}><ShoppingCartIcon sx={{color: '#5d4037'}}/></Button>
+                <Button onClick={toCart}>
+                    <ShoppingCartIcon sx={{color: '#5d4037'}}/>
+                </Button>
             </Toolbar>
         </Box>
     )

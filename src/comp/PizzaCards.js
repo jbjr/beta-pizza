@@ -4,18 +4,22 @@ import Button from "@mui/material/Button";
 import {useState} from "react";
 import {getOrdersCollection, getPizzaCollection} from "./helper";
 import * as Realm from "realm-web";
-//import HeaderBar from "./HeaderBar";
-
-
-
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import HeaderBar from "./HeaderBar";
 
 export default function PizzaCards({items}){
 
     const app = Realm.App.getApp('application-0-ctrvo');
     const user = app.currentUser;
 
-    //const [value, setValue] = useState();
     const [snack, setSnackOpen] = useState(false);
+
+    const [quantity, setQuantity] = useState(1);
+
+    const handleQtyChange = (event) => {
+        setQuantity(event.target.value);
+    };
 
     const handleClose = (event, reason) => {
         if (reason === 'clickaway'){
@@ -41,7 +45,9 @@ export default function PizzaCards({items}){
             "$push": {
                 "item": {
                     "name": pizzaChoice.name,
-                    "price": pizzaChoice.price
+                    "price": pizzaChoice.price,
+                    "qty": quantity,
+                    "item_id": pizzaChoice.item_id
                 }
             }
         }
@@ -52,12 +58,14 @@ export default function PizzaCards({items}){
             setSnackOpen(true);
             console.log('Modified the record')
         }
+        setQuantity(1);
         console.log(result);
-        console.log("Made it through");
+        console.log("Quantity: ", quantity);
     }
 
     return(
         <Box sx={{boxShadow: 2}}>
+            <HeaderBar/>
             <Box sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
                 {items.map(pizza => (
                     <Card sx={{width: 300, m: 2, borderRadius: '10px', boxShadow: 5}} key={pizza.name}>
@@ -67,16 +75,21 @@ export default function PizzaCards({items}){
                             <Typography variant={'caption'} sx={{color: '#5d4037'}}>{pizza.price}</Typography>
                             <Typography variant={'body2'} sx={{color: '#5d4037'}}>{pizza.desc}</Typography>
                         </CardContent>
-                        <CardActions>
+                        <CardActions sx={{height: 40}}>
                             <Button onClick={testClick} value={pizza.item_id} sx={{fontWeight: 'bold'}}>Add to Order!</Button>
-                            <Snackbar open={snack} autoHideDuration={3000} onClose={handleClose}>
-                                <Alert variant={"filled"} severity="success" sx={{ width: '100%', fontWeight: 'bold'}}>
-                                    Pizza was successfully added to your cart!
-                                </Alert>
-                            </Snackbar>
+                            <Select sx={{width: 100, height: 30, ml: 2}} value={quantity} label="Qty" onChange={handleQtyChange}>
+                                <MenuItem value={1}>One</MenuItem>
+                                <MenuItem value={2}>Two</MenuItem>
+                                <MenuItem value={3}>Three</MenuItem>
+                            </Select>
                         </CardActions>
                     </Card>
                 ))}
+                <Snackbar open={snack} autoHideDuration={3000} onClose={handleClose}>
+                    <Alert variant={"filled"} severity="success" sx={{ width: '100%', fontWeight: 'bold'}}>
+                        Pizza was successfully added to your cart!
+                    </Alert>
+                </Snackbar>
             </Box>
         </Box>
     )

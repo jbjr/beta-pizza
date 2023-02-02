@@ -19,14 +19,22 @@ export default function NewOrderDialog(){
         setOpen(false);
     }
 
-    async function handleYesClose(){
+    async function handleStartNewOrder(){
         setOpen(false);
         const user = app.currentUser;
         const orderCollection = getOrdersCollection(user);
+
+        const deleteResult = await orderCollection.deleteMany({
+            "user_id": user.id,
+            "status": "pending"
+        });
+
+        console.log(deleteResult);
+
         const newOrder = {
             "user_id": user.id,
             "item": [],
-            "total": "",
+            "total": 0,
             "status": "pending"
         }
         const result = await orderCollection.insertOne(newOrder);
@@ -45,14 +53,12 @@ export default function NewOrderDialog(){
             </DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">
-                    Are you ready to take a look at our menu and start a new order?
+                    Are you ready to start a new order?
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleClose}>No</Button>
-                <Button onClick={handleYesClose} autoFocus>
-                    Start My Order
-                </Button>
+                <Button onClick={handleStartNewOrder} autoFocus={true}>Start New Order</Button>
             </DialogActions>
         </Dialog>
     )
