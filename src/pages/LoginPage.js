@@ -5,7 +5,7 @@ import * as Realm from "realm-web";
 import {useNavigate} from "react-router-dom";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 
-export default function Login() {
+export default function LoginPage() {
 
     const [email, setEmail] = useState('');
 
@@ -36,7 +36,7 @@ export default function Login() {
             console.log(app.currentUser);
             navigate('/main/' + user.id);
         }catch(err){
-            alert("Login failed.\n\n" +
+            alert("LoginPage failed.\n\n" +
                 "Please try to login again")
             console.error("Failed to log in", err);
         }
