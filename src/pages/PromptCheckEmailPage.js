@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import Typography from "@mui/material/Typography";
 
-export default function PromptCheckEmail(){
+export default function PromptCheckEmailPage(){
     return(
         <Grid container justifyContent={"center"} alignItems={"center"}
               sx={{height: '100vh', backgroundColor: '#d7ccc8', backgroundSize: "cover"}}>

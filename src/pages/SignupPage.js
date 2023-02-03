@@ -8,7 +8,7 @@ import {useNavigate} from "react-router-dom";
 import * as Realm from 'realm-web';
 
 
-export default function Signup(){
+export default function SignupPage(){
 
     const app = Realm.App.getApp('application-0-ctrvo');
 

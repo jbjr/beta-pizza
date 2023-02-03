@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import * as Realm from 'realm-web';
 
-export default function ConfirmAccount () {
+export default function ConfirmAccountPage () {
 
     const app = Realm.App.getApp('application-0-ctrvo');
 
