@@ -10,6 +10,7 @@ import CartPage from "./pages/CartPage";
 import AdminPage from "./pages/AdminPage";
 import PrivateUserRoute from "./comp/PrivateUserRoute";
 import MyChart from "./comp/MyChart";
+import CheckoutPage from "./pages/CheckoutPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           </Route>
           <Route exact path={'/'} element={<Login/>}/>
           <Route exact path={'*'} element={<Login/>}/>
+          <Route exact path={'/checkout-page'} element={<CheckoutPage/>}/>
           <Route exact path={'/chart'} element={<MyChart/>}/>
           <Route exact path={'/signup'} element={<Signup/>}/>
           <Route exact path={'/prompt-check-email'} element={<PromptCheckEmail/>}/>
