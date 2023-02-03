@@ -38,9 +38,7 @@ export default function OrderTable({items}) {
         }
 
         const orderResult = await orderCollection.updateOne(query, update);
-
         const rowResult = await orderCollection.updateOne(query, rowUpdate);
-
         const displayResult = await orderCollection.findOne(query);
 
         console.log(cartItem);

@@ -1,13 +1,48 @@
-import {List, ListItem, ListItemText, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import OrderTable from "./OrderTable";
+import * as Realm from "realm-web";
+import {getOrdersCollection} from "./helper";
 
 
 export default function OrderList({items, detailsId, detailsTotal}){
+
+    const app = Realm.App.getApp('application-0-ctrvo');
+    const user = app.currentUser;
+
     const {id} = useParams();
+
+    const navigate = useNavigate();
+
+    async function handleCheckoutClick(){
+        const orderCollection = getOrdersCollection(user);
+        const query = {
+            "user_id": user.id,
+            "status": "pending",
+
+        };
+
+        const update ={
+            "$set":{
+                "status": "confirmed"
+            }
+        }
+        const result = await orderCollection.findOne(query);
+        console.log(result);
+
+        const changeStatus = await orderCollection.updateOne(query, update)
+
+        const checkResult = await orderCollection.findOne(query);
+        console.log(checkResult);
+
+        console.log(changeStatus)
+
+        navigate('/checkout-page');
+
+    }
 
     return(
         <Box sx={{border: 1, boxShadow:10, p: 3, borderRadius: "16px", backgroundColor: 'white'}}>
@@ -25,7 +60,7 @@ export default function OrderList({items, detailsId, detailsTotal}){
             <Typography sx={{fontWeight: 'bold', mb: 1}}>Order Details: </Typography>
             <OrderTable items={items}></OrderTable>
             <Box sx={{display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center'}}>
-                <Button sx={{mt: 2}} variant={"contained"} color={"success"}>Checkout</Button>
+                <Button onClick={handleCheckoutClick} sx={{mt: 2}} variant={"contained"} color={"success"}>Checkout</Button>
                 <Button href={'/main/' + id} sx={{my: 2}} variant={"contained"}>Return to Menu</Button>
             </Box>
         </Box>
