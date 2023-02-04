@@ -17,7 +17,10 @@ export default function PizzaCards({items}){
 
     const [quantity, setQuantity] = useState(1);
 
-    const handleQtyChange = (event) => {
+    const [selectedId, setSelectedId] = useState();
+
+    const handleQtyChange = (id, event) => {
+        setSelectedId(id);
         setQuantity(event.target.value);
     };
 
@@ -68,7 +71,7 @@ export default function PizzaCards({items}){
             <HeaderBar/>
             <Box sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
                 {items.map(pizza => (
-                    <Card sx={{width: 300, m: 2, borderRadius: '10px', boxShadow: 5}} key={pizza.name}>
+                    <Card sx={{width: 300, m: 2, borderRadius: '10px', boxShadow: 5}} key={pizza.item_id}>
                         <CardMedia sx={{height: 150}} image={pizza.img}/>
                         <CardContent sx={{height: 150}}>
                             <Typography variant={'h5'} sx={{color: '#5d4037', fontWeight: 'bold'}}>{pizza.name}</Typography>
@@ -77,7 +80,8 @@ export default function PizzaCards({items}){
                         </CardContent>
                         <CardActions sx={{height: 40}}>
                             <Button onClick={testClick} value={pizza.item_id} sx={{fontWeight: 'bold'}}>Add to Order!</Button>
-                            <Select sx={{width: 100, height: 30, ml: 2}} value={quantity} label="Qty" onChange={handleQtyChange}>
+                            <Select sx={{width: 100, height: 30, ml: 2}} value={selectedId === pizza.item_id ? quantity : 1} label="Qty"
+                                    onChange={(e) => handleQtyChange(pizza.item_id, e)}>
                                 <MenuItem value={1}>One</MenuItem>
                                 <MenuItem value={2}>Two</MenuItem>
                                 <MenuItem value={3}>Three</MenuItem>
