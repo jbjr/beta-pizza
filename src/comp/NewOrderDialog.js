@@ -35,7 +35,8 @@ export default function NewOrderDialog(){
             "user_id": user.id,
             "item": [],
             "total": 0,
-            "status": "pending"
+            "status": "pending",
+            "status_date": new Date()
         }
         const result = await orderCollection.insertOne(newOrder);
         console.log(result);

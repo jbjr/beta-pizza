@@ -11,6 +11,7 @@ import AdminPage from "./pages/AdminPage";
 import PrivateUserRoute from "./comp/PrivateUserRoute";
 import MyChart from "./comp/MyChart";
 import CheckoutPage from "./pages/CheckoutPage";
+import PaymentConfirmedPage from "./pages/PaymentConfirmedPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route exact path={'/'} element={<LoginPage/>}/>
           <Route exact path={'*'} element={<LoginPage/>}/>
           <Route exact path={'/checkout-page'} element={<CheckoutPage/>}/>
+          <Route exact path={'/payment-confirmed'} element={<PaymentConfirmedPage/>}/>
           <Route exact path={'/chart'} element={<MyChart/>}/>
           <Route exact path={'/signup'} element={<SignupPage/>}/>
           <Route exact path={'/prompt-check-email'} element={<PromptCheckEmailPage/>}/>

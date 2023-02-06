@@ -31,7 +31,7 @@ export default function PizzaCards({items}){
         setSnackOpen(false);
     }
 
-    async function testClick(event){
+    async function addToOrder(event){
         const item = event.target.value;
         console.log('The button works from another page!');
         console.log('This is the item id for the button: ', item);
@@ -79,7 +79,7 @@ export default function PizzaCards({items}){
                             <Typography variant={'body2'} sx={{color: '#5d4037'}}>{pizza.desc}</Typography>
                         </CardContent>
                         <CardActions sx={{height: 40}}>
-                            <Button onClick={testClick} value={pizza.item_id} sx={{fontWeight: 'bold'}}>Add to Order!</Button>
+                            <Button onClick={addToOrder} value={pizza.item_id} sx={{fontWeight: 'bold'}}>Add to Order!</Button>
                             <Select sx={{width: 100, height: 30, ml: 2}} value={selectedId === pizza.item_id ? quantity : 1} label="Qty"
                                     onChange={(e) => handleQtyChange(pizza.item_id, e)}>
                                 <MenuItem value={1}>One</MenuItem>
@@ -89,7 +89,7 @@ export default function PizzaCards({items}){
                         </CardActions>
                     </Card>
                 ))}
-                <Snackbar open={snack} autoHideDuration={3000} onClose={handleClose}>
+                <Snackbar open={snack} autoHideDuration={1000} onClose={handleClose}>
                     <Alert variant={"filled"} severity="success" sx={{ width: '100%', fontWeight: 'bold'}}>
                         Pizza was successfully added to your cart!
                     </Alert>
