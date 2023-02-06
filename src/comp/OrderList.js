@@ -19,6 +19,14 @@ export default function OrderList({items, detailsId, detailsTotal}){
 
     async function handleCheckoutClick(){
         const orderCollection = getOrdersCollection(user);
+
+        const deleteResult = await orderCollection.deleteMany({
+            "user_id": user.id,
+            "status": "confirmed"
+        });
+
+        console.log("Any orders that are just confirmed?  ", deleteResult);
+
         const query = {
             "user_id": user.id,
             "status": "pending",
@@ -36,7 +44,7 @@ export default function OrderList({items, detailsId, detailsTotal}){
         const changeStatus = await orderCollection.updateOne(query, update)
 
         const checkResult = await orderCollection.findOne(query);
-        console.log(checkResult);
+        console.log("Are there any pending orders still?  ", checkResult);
 
         console.log(changeStatus)
 

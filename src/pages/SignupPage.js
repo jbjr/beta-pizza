@@ -39,7 +39,7 @@ export default function SignupPage(){
     }
 
     return(
-        <Grid container justifyContent={"center"} alignItems={"center"} sx={{height: '100vh', backgroundColor: '#d7ccc8', backgroundSize: "cover"}}>
+        <Grid container justifyContent={"center"} alignItems={"center"} sx={{height: '100vh', backgroundImage: 'url(/bgimage.jpg)', backgroundSize: "cover"}}>
             <Grid item xs={1}>
             </Grid>
             <Grid container spacing={0} justifyContent={"center"} alignItems={"center"} sx={{height: '90vh'}}>

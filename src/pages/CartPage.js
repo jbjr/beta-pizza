@@ -4,31 +4,22 @@ import {getOrdersCollection} from "../comp/helper";
 import Box from "@mui/material/Box";
 import OrderList from "../comp/OrderList";
 
-
 export default function CartPage(){
-    //Connect to the App
-    // getApp() is a built in realm function
+
     const app = Realm.App.getApp('application-0-ctrvo');
 
-    //Get the current user
-    // currentUser is a built in realm function
     const user = app.currentUser;
 
-    //Log the current user in the browser console
     console.log(user);
 
-    // currentOrder will hold the order we want in the cart
-    // setOrder will utilize useState() to populate currentOrder
     const[currentOrder, setOrder] = useState([]);
     const[userId, setId] = useState('');
     const[cartTotal, setCartTotal] = useState(0);
 
-    // Need useEffect() to render info for CartList component
     useEffect(() => {
         getUserOrderInformation();
     }, []);
 
-    // Function that grabs currentOrder information from database
     async function getUserOrderInformation(){
         const orderCollection = getOrdersCollection(user);
         const query = {
@@ -61,7 +52,7 @@ export default function CartPage(){
 
     return(
         <Box>
-            <Box sx={{height: '100vh', backgroundColor: '#d7ccc8', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
+            <Box sx={{height: '100vh', backgroundImage: 'url(/bgimage.jpg)', display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
                 <OrderList items={currentOrder} detailsId={userId} detailsTotal={cartTotal}/>
             </Box>
         </Box>
