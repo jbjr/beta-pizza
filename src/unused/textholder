@@ -6,3 +6,5 @@ This is just used to hold things that are removed that may be added back
 <DeleteForeverIcon sx={{color: '#ad1f1f'}}/>
 
 <CheckoutHeader user={user.id} orderTotal={total}/>
+
+onClick={updateInventoryOnPayment}

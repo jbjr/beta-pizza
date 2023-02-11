@@ -12,6 +12,12 @@ export function getOrdersCollection(user){
     return collection;
 }
 
+export function getInventoryCollection(user){
+    const mongo = user.mongoClient('mongodb-atlas');
+    const collection = mongo.db('inventory').collection('pizzas');
+    return collection;
+}
+
 export async function getAdminCollection(user) {
     const mongo = user.mongoClient('mongodb-atlas');
     const collection = mongo.db('authorized_users').collection('admin_user');
