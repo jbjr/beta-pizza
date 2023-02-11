@@ -9,7 +9,7 @@ import MainPage from "./pages/MainPage";
 import CartPage from "./pages/CartPage";
 import AdminPage from "./pages/AdminPage";
 import PrivateUserRoute from "./comp/PrivateUserRoute";
-import MyChart from "./comp/MyChart";
+import MyChart from "./comp/charts/MyChart";
 import CheckoutPage from "./pages/CheckoutPage";
 import PaymentConfirmedPage from "./pages/PaymentConfirmedPage";
 import FunctionTests from "./unused/FunctionTests";
@@ -25,7 +25,7 @@ function App() {
           </Route>
           <Route exact path={'/'} element={<LoginPage/>}/>
           <Route exact path={'*'} element={<LoginPage/>}/>
-          <Route exact path={'/inventory'} element={<FunctionTests/>}/>
+          <Route exact path={'/test'} element={<FunctionTests/>}/>
           <Route exact path={'/checkout-page'} element={<CheckoutPage/>}/>
           <Route exact path={'/payment-confirmed'} element={<PaymentConfirmedPage/>}/>
           <Route exact path={'/chart'} element={<MyChart/>}/>

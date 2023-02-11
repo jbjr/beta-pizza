@@ -4,7 +4,13 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import * as Realm from "realm-web";
-import MyChart from "../comp/MyChart";
+import MyChart from "../comp/charts/MyChart";
+import PriceOfPizzaChart from "../comp/charts/PriceOfPizzaChart";
+import OrdersPerUserChart from "../comp/charts/OrdersPerUserChart";
+import PizzaOrderFrequencyChart from "../comp/charts/PizzaOrderFrequencyChart";
+import SalesDOWChart from "../comp/charts/SalesDOWChart";
+import SalesDOYChart from "../comp/charts/SalesDOYChart";
+import TrendUserDOYChart from "../comp/charts/TrendUserDOYChart";
 
 export default function AdminPage(){
 
@@ -36,23 +42,16 @@ export default function AdminPage(){
 
     return(
         <Box sx={{justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
-            <Dialog
-                fullScreen
-                open={open}
-                onClose={handleClose}
-            >
-                <Box sx={{height: 500, justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
-                    <Typography variant={'h5'}>Admin Verification</Typography>
-                    <TextField onChange={handleChange} sx={{width: '300', m: 3}} value={adminKey} label="Admin Key" variant="outlined"></TextField>
-                    <Button variant={"contained"} onClick={handleClose}>Continue</Button>
-                </Box>
 
-            </Dialog>
-            <MyChart/>
-            <MyChart/>
-            <MyChart/>
-            <MyChart/>
-            <MyChart/>
+
+            <OrdersPerUserChart/>
+            <SalesDOWChart/>
+            <SalesDOYChart/>
+
+            <PizzaOrderFrequencyChart/>
+            <TrendUserDOYChart/>
+            <PriceOfPizzaChart/>
+
             <MyChart/>
             <MyChart/>
         </Box>
