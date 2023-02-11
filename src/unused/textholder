@@ -8,3 +8,19 @@ This is just used to hold things that are removed that may be added back
 <CheckoutHeader user={user.id} orderTotal={total}/>
 
 onClick={updateInventoryOnPayment}
+
+
+
+
+
+
+<Box sx={{height: 500, justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+                    <Typography variant={'h5'}>Admin Verification</Typography>
+                    <TextField onChange={handleChange} sx={{width: '300', m: 3}} value={adminKey} label="Admin Key" variant="outlined"></TextField>
+                    <Button variant={"contained"} onClick={handleClose}>Continue</Button>
+                </Box>
+<Dialog
+                fullScreen
+                open={open}
+                onClose={handleClose}
+            ></Dialog>
