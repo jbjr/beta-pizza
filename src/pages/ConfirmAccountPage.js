@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import Button from "@mui/material/Button";
@@ -20,6 +20,12 @@ export default function ConfirmAccountPage () {
 
     console.log(token);
     console.log(token_id);
+
+    //added this to help with new signup verification hoping to avoid the inability to signin without page refresh
+    /*useEffect(() => {
+        clickSubmit();
+
+    }, []);*/
 
     async function clickSubmit(){
         await app.emailPasswordAuth.confirmUser({token: token, tokenId: token_id});

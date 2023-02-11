@@ -32,8 +32,6 @@ export default function AdminPage(){
             console.error("Failed to log in", err);
             console.log("Could not sign in, try again.")
         }
-
-
     }
 
     return(
@@ -45,7 +43,7 @@ export default function AdminPage(){
             >
                 <Box sx={{height: 500, justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
                     <Typography variant={'h5'}>Admin Verification</Typography>
-                    <TextField onChange={handleChange} sx={{width: '300', m: 3}}value={adminKey} label="Admin Key" variant="outlined"></TextField>
+                    <TextField onChange={handleChange} sx={{width: '300', m: 3}} value={adminKey} label="Admin Key" variant="outlined"></TextField>
                     <Button variant={"contained"} onClick={handleClose}>Continue</Button>
                 </Box>
 

@@ -1,6 +1,6 @@
 import * as Realm from "realm-web";
 import React, {useEffect} from "react";
-import {getOrdersCollection} from "../comp/helper";
+import {getInventoryCollection, getOrdersCollection} from "../comp/helper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
@@ -13,9 +13,86 @@ export default function PaymentConfirmedPage(){
     const user = app.currentUser;
 
     useEffect(() => {
+        updateInventoryOnPayment();
         updateStatusComplete();
 
     }, []);
+
+    async function updateInventoryOnPayment(){
+        const inventoryCollection = getInventoryCollection(user);
+        console.log(inventoryCollection);
+
+        const orderCollection = getOrdersCollection(user);
+        console.log(orderCollection);
+
+        const currentOrderQuery = {
+            "user_id": user.id,
+            "status": "confirmed"
+        }
+        const removeOneUnit = {
+            "$inc": {
+                "units": -1
+            }
+        }
+        const removeTwoUnits = {
+            "$inc": {
+                "units": -2
+            }
+        }
+        const addOneUnit = {
+            "$inc": {
+                "units": 1
+            }
+        }
+        const baseQuery = {
+
+        }
+        const meatQuery = {
+            "name": "meat"
+        }
+        const produceQuery = {
+            "name": "produce"
+        }
+
+        const result = await orderCollection.findOne(currentOrderQuery);
+        console.log('Result var from updateInventory', result);
+
+        result.item.forEach(pizza => {
+
+                const updateAllInventoryCategories = inventoryCollection.updateMany(baseQuery, removeOneUnit);
+                console.log('This is where 1 unit is being removed from each category: ', updateAllInventoryCategories);
+
+                if(pizza.item_id === "1" || pizza.item_id === "2" || pizza.item_id === "7" || pizza.item_id === "9"){
+                    console.log('Matched pizza in first set in IF block');
+                    const meatUpdate = inventoryCollection.updateOne(meatQuery, removeOneUnit);
+                    console.log('Removed 1 meat unit: ', meatUpdate);
+                }
+                else if (pizza.item_id === "4"){
+                    console.log('Matched pizza number 4 in IF block');
+                    const meatUpdate = inventoryCollection.updateOne(meatQuery, removeTwoUnits);
+                    console.log('Removed 2 meat units: ', meatUpdate);
+                }
+                else if (pizza.item_id === "6"){
+                    console.log('Matched pizza number 6 in IF block');
+                    const meatUpdate = inventoryCollection.updateOne(meatQuery, removeTwoUnits);
+                    console.log('Removed 2 meat units: ', meatUpdate);
+
+                    const produceUpdate = inventoryCollection.updateOne(produceQuery, addOneUnit);
+                    console.log('Added 1 produce back: ', produceUpdate);
+                }
+                else if(pizza.item_id === "8"){
+                    console.log('Matched pizza number 8 in IF block');
+                    const meatUpdate = inventoryCollection.updateOne(meatQuery, removeOneUnit);
+                    console.log('Removed 1 meat unit: ', meatUpdate);
+
+                    const produceUpdate = inventoryCollection.updateOne(produceQuery, addOneUnit);
+                    console.log('Added 1 produce back: ', produceUpdate);
+                }
+                else{
+                    console.log("Pizza did not need to update the inventory more than the base update.");
+                }
+            })
+    }
 
     async function updateStatusComplete(){
         const orderCollection = getOrdersCollection(user);

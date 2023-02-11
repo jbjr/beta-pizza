@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Box, Button, Grid, TextField} from "@mui/material";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import * as Realm from "realm-web";
@@ -12,7 +12,6 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
 
     const app = new Realm.App({id: 'application-0-ctrvo'});
-
 
     const handleEmailChange = (event) => {
         setEmail(event.target.value);
