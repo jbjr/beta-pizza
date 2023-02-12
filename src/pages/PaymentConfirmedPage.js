@@ -1,6 +1,6 @@
 import * as Realm from "realm-web";
 import React, {useEffect} from "react";
-import {getInventoryCollection, getOrdersCollection} from "../comp/helper";
+import {getFinanceCollection, getInventoryCollection, getOrdersCollection} from "../comp/helper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
@@ -96,6 +96,9 @@ export default function PaymentConfirmedPage(){
 
     async function updateStatusComplete(){
         const orderCollection = getOrdersCollection(user);
+
+        const financeCollection = getFinanceCollection(user);
+
         const query = {
             "user_id": user.id,
             "status": "confirmed",
@@ -107,8 +110,35 @@ export default function PaymentConfirmedPage(){
                 "status_date": new Date()
             }
         }
+
         const result = await orderCollection.findOne(query);
         console.log(result);
+
+        const queryRevenue = {
+            "type": "Revenue"
+        }
+
+        const queryAccount = {
+            "type": "Account"
+        }
+
+        const updateRevenue = {
+            "$inc": {
+                "value": result.total
+            }
+        }
+
+        const updateAccount = {
+            "$inc": {
+                "value": result.total
+            }
+        }
+
+        const resultRevenue = await financeCollection.updateOne(queryRevenue, updateRevenue);
+        console.log('Did revenue get updated? ', resultRevenue);
+
+        const resultAccount = await financeCollection.updateOne(queryAccount, updateAccount);
+        console.log('Did account balance get updated? ', resultAccount);
 
         const changeStatus = await orderCollection.updateOne(query, update)
         console.log(changeStatus);
