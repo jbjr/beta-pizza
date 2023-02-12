@@ -2,7 +2,14 @@ import * as Realm from "realm-web";
 import Box from "@mui/material/Box";
 import {Stack} from "@mui/material";
 import Button from "@mui/material/Button";
-import {getInventoryCollection, getOrdersCollection} from "../comp/helper";
+import {
+    getAllDataCollection,
+    getAllInventoryCollection,
+    getAllOrderOptionsCollection,
+    getAllOrdersCollection,
+    getInventoryCollection,
+    getOrdersCollection, getPizzaCollection
+} from "../comp/helper";
 import {useState} from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -229,6 +236,98 @@ export default function FunctionTests(){
         setInventoryArray(inventoryStore);
     }
 
+    async function copyDatabase(){
+        const orderCollection = getOrdersCollection(user);
+        const orderOptionsCollection = getPizzaCollection(user);
+        const inventoryCollection = getInventoryCollection(user);
+
+
+        const copyOrdersCollection = getAllOrdersCollection(user);
+        const copyOrderOptionsCollection = getAllOrderOptionsCollection(user);
+        const copyInventoryCollection = getAllInventoryCollection(user);
+        const allDataCollection = getAllDataCollection(user);
+
+        const deleteCopyOrders = await copyOrdersCollection.deleteMany({});
+        const deleteCopyOrderOptions = await copyOrderOptionsCollection.deleteMany({});
+        const deleteCopyInventory = await copyInventoryCollection.deleteMany({});
+        const deleteAllDataCollectionItems = await allDataCollection.deleteMany({});
+        console.log('Did the delete match: ', deleteCopyOrders);
+        console.log('Did the delete match: ', deleteCopyOrderOptions);
+        console.log('Did the delete match: ', deleteCopyInventory);
+        console.log('Did the delete match: ', deleteAllDataCollectionItems);
+
+
+        //const resultOrderOptions = await copyOrderOptionsCollection.find();
+
+        ////////////////////////////////////////////////////////////////
+        // Update Orders in the Complete DB
+        const resultOrders = await orderCollection.find();
+        let tempOrderStorage = [];
+
+        console.log(resultOrders);
+
+        resultOrders.forEach(item => {
+            tempOrderStorage.push({
+                user_id: item.user_id,
+                item: item.item,
+                total: item.total,
+                status: item.status,
+                status_date: item.status_date
+            })
+        })
+        //const copyOrders = await copyOrdersCollection.insertMany(tempOrderStorage);
+        //console.log('Display ids if successful: ', copyOrders);
+
+        ////////////////////////////////////////////////////////////////
+        // Update Order Options in the Complete DB
+        const resultOrderOptions = await orderOptionsCollection.find();
+        let tempOrderOptionsStorage = [];
+        console.log(resultOrderOptions);
+        resultOrderOptions.forEach(item => {
+            tempOrderOptionsStorage.push({
+                name: item.name,
+                price: item.price,
+                item_id: item.item_id,
+                desc: item.desc
+            })
+        })
+        //const copyOrderOptions = await copyOrderOptionsCollection.insertMany(tempOrderOptionsStorage);
+        //console.log('Display ids if successful: ', copyOrderOptions);
+
+        ////////////////////////////////////////////////////////////////
+        // Update Inventory in the Complete DB
+        const resultInventory = await inventoryCollection.find();
+        let tempInventoryStorage = [];
+        console.log(resultInventory);
+        resultInventory.forEach(item => {
+            tempInventoryStorage.push({
+                name: item.name,
+                units: item.units,
+                cost_per_unit: item.cost_per_unit
+            })
+        })
+        //const copyInventory = await copyInventoryCollection.insertMany(tempInventoryStorage);
+        //console.log('Display ids if successful: ', copyInventory);
+
+        const copyOrders = await allDataCollection.insertMany(tempOrderStorage);
+        const copyInventory = await allDataCollection.insertMany(tempInventoryStorage);
+        const copyOrderOptions = await allDataCollection.insertMany(tempOrderOptionsStorage);
+
+    }
+
+    async function addOrderCountField(){
+        const orderOptionsCollection = getPizzaCollection(user);
+        const queryPizza = {};
+        const updatePizza = {
+            "$set": {
+                "total_ordered": 0
+            }
+        }
+
+        const updatePizzaOrderTotal = await orderOptionsCollection.updateMany(queryPizza, updatePizza);
+        console.log('Did the new field get added?', updatePizzaOrderTotal);
+    }
+
     return(
         <Grid container justifyContent={'center'} alignItems={'center'} sx={{p: 4}}>
             <Grid item xs={12}>
@@ -237,6 +336,8 @@ export default function FunctionTests(){
                     <Button onClick={resetInventory}>Reset Inventory Back To 1000 units</Button>
                     <Button onClick={getTotalRevenue}>Get totals from orders</Button>
                     <Button onClick={showInventory}>Show the current inventory</Button>
+                    <Button onClick={copyDatabase}>Copy database</Button>
+                    <Button onClick={addOrderCountField}>Add new field to pizzas collection</Button>
                 </Box>
             </Grid>
             <Grid item xs={6}>
