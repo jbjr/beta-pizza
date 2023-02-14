@@ -62,9 +62,12 @@ export default function AdminPage(){
         const resultAccount = await financeCollection.findOne({"type": "Account"})
         const resultSales = await financeCollection.findOne({"type": "Revenue"})
         const resultExpenses = await financeCollection.findOne({"type": "Expenses"})
-        setAccountBalance(resultAccount.value);
-        setSalesBalance(resultSales.value);
-        setExpenseBalance(resultExpenses.value);
+
+
+
+        setAccountBalance(resultAccount.value.toFixed(2));
+        setSalesBalance(resultSales.value.toFixed(2));
+        setExpenseBalance(resultExpenses.value.toFixed(2));
 
         const ordersCollection = getOrdersCollection(user);
         const queryOrders = {"status": "paid"};
@@ -141,6 +144,19 @@ export default function AdminPage(){
     }
 
     return(
+        <>
+            <Dialog
+                fullScreen
+                open={open}
+                onClose={handleClose}
+                sx={{}}
+            >
+                <Box sx={{backgroundColor: '#e8eaf6', minHeight: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
+                    <Typography sx={{fontWeight: 'bold', color: '#1a237e'}} variant={'h5'}>Admin Verification</Typography>
+                    <TextField onChange={handleChange} sx={{width: '300', m: 3, backgroundColor: 'white'}} value={adminKey} label="Admin Key" variant="outlined"></TextField>
+                    <Button sx={{mx: 3, boxShadow: '10', backgroundColor: '#3f51b5', '&:hover': {backgroundColor: '#9fa8da'}}} variant={"contained"} onClick={handleClose}>Continue</Button>
+                </Box>
+            </Dialog>
         <Grid container sx={{backgroundColor: '#e8eaf6', minHeight: '100vh', justifyContent: 'center', alignItems: 'flex-start', display: 'flex', flexDirection: 'row', flexWrap: 'wrap'}}>
             <Grid item xs={12} sx={{}}>
                 <AppBar position="static" sx={{backgroundColor: '#1a237e'}} elevation={10}>
@@ -234,5 +250,6 @@ export default function AdminPage(){
             </Grid>
             <Grid item xs={2}></Grid>
         </Grid>
+            </>
     )
 };

@@ -17,6 +17,8 @@ export default function OrderList({items, detailsId, detailsTotal}){
 
     const navigate = useNavigate();
 
+    console.log(user.profile.email);
+
     async function handleCheckoutClick(){
         const orderCollection = getOrdersCollection(user);
 
@@ -58,8 +60,8 @@ export default function OrderList({items, detailsId, detailsTotal}){
                 <LocalPizzaIcon sx={{height: 100, width: 100, m: 2}}/>
             </Box>
             <Box sx={{width: 300, display: 'flex', flexDirect: 'row'}}>
-                <Typography sx={{fontWeight: 'bold', mr: 2}}>User Id:</Typography>
-                <Typography>{detailsId}</Typography>
+                <Typography sx={{fontWeight: 'bold', mr: 2}}>User Email:</Typography>
+                <Typography>{user.profile.email}</Typography>
             </Box>
             <Box sx={{display: 'flex', flexDirect: 'row'}}>
                 <Typography sx={{fontWeight: 'bold', mr: 2}}>Order Total:</Typography>

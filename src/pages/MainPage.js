@@ -45,7 +45,7 @@ export default function MainPage({user}) {
 
     return(
         <Box>
-            <Box sx={{backgroundColor: '#d7ccc8', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+            <Box sx={{minHeight: '100vh', backgroundColor: '#d7ccc8', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
                 <NewOrderDialog/>
                 <PizzaCards items={pizzaHolder}></PizzaCards>
             </Box>
