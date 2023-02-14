@@ -55,7 +55,7 @@ export default function LoginPage() {
                     <TextField onChange={handlePasswordChange} value={password} type={'password'} sx={{m: 2, width: 300}} id="outlined-basic" label="Password" variant="outlined"/>
                     <Button onClick={handleClick} sx={{m: 3}} variant={"contained"} color={"success"}>Login</Button>
                     <Button onClick={signupClick} sx={{textTransform: 'capitalize', mb: 1}}>Create a free account!</Button>
-                    <Button color={"error"} sx={{textTransform: 'capitalize', mb: 2}}>Forgot Password?</Button>
+                    <Button href={'/reset-password'} color={"error"} sx={{textTransform: 'capitalize', mb: 2}}>Forgot Password?</Button>
                 </Box>
             </Grid>
             <Grid item xs={1}></Grid>
