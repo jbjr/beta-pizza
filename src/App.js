@@ -13,6 +13,9 @@ import MyChart from "./comp/charts/MyChart";
 import CheckoutPage from "./pages/CheckoutPage";
 import PaymentConfirmedPage from "./pages/PaymentConfirmedPage";
 import FunctionTests from "./unused/FunctionTests";
+import PromptCheckEmailResetPage from "./pages/PromptCheckEmailResetPage";
+import CompletePasswordResetPage from "./pages/CompletePasswordResetPage";
+import PasswordResetPage from "./pages/PasswordResetPage";
 
 function App() {
   return (
@@ -30,8 +33,11 @@ function App() {
           <Route exact path={'/payment-confirmed'} element={<PaymentConfirmedPage/>}/>
           <Route exact path={'/chart'} element={<MyChart/>}/>
           <Route exact path={'/signup'} element={<SignupPage/>}/>
+          <Route exact path={'/reset-password'} element={<PasswordResetPage/>}/>
           <Route exact path={'/prompt-check-email'} element={<PromptCheckEmailPage/>}/>
+          <Route exact path={'/prompt-check-email-reset'} element={<PromptCheckEmailResetPage/>}/>
           <Route exact path={'/confirm-account'} element={<ConfirmAccountPage/>}/>
+          <Route exact path={'/update-password'} element={<CompletePasswordResetPage/>}/>
           <Route exact path={'/admin-page'} element={<AdminPage/>}/>
         </Routes>
       </BrowserRouter>
