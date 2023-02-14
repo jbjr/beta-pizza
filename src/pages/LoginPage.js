@@ -52,7 +52,7 @@ export default function LoginPage() {
                 <Box sx={{backgroundColor: 'white', borderRadius: '16px', boxShadow: 10, border: 1, display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', alignItems: 'center'}}>
                     <LocalPizzaIcon sx={{height: 100, width: 100, mt: 2}}/>
                     <TextField onChange={handleEmailChange} value={email} sx={{m: 2, width: 300}} id="outlined-basic" label="Username" variant="outlined"/>
-                    <TextField onChange={handlePasswordChange} value={password} sx={{m: 2, width: 300}} id="outlined-basic" label="Password" variant="outlined"/>
+                    <TextField onChange={handlePasswordChange} value={password} type={'password'} sx={{m: 2, width: 300}} id="outlined-basic" label="Password" variant="outlined"/>
                     <Button onClick={handleClick} sx={{m: 3}} variant={"contained"} color={"success"}>Login</Button>
                     <Button onClick={signupClick} sx={{textTransform: 'capitalize', mb: 1}}>Create a free account!</Button>
                     <Button color={"error"} sx={{textTransform: 'capitalize', mb: 2}}>Forgot Password?</Button>

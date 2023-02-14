@@ -251,6 +251,7 @@ export default function FunctionTests(){
         const deleteCopyOrderOptions = await copyOrderOptionsCollection.deleteMany({});
         const deleteCopyInventory = await copyInventoryCollection.deleteMany({});
         const deleteAllDataCollectionItems = await allDataCollection.deleteMany({});
+
         console.log('Did the delete match: ', deleteCopyOrders);
         console.log('Did the delete match: ', deleteCopyOrderOptions);
         console.log('Did the delete match: ', deleteCopyInventory);
