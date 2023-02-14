@@ -23,6 +23,11 @@ export default function LoginPage() {
 
     const navigate = useNavigate();
 
+    useEffect(() => {
+        clearUsers();
+
+    }, []);
+
     async function handleClick(){
         const credentials = Realm.Credentials.emailPassword(
             email,
@@ -33,7 +38,8 @@ export default function LoginPage() {
             console.assert(user.id === app.currentUser.id);
             console.log(user.id);
             console.log(app.currentUser);
-            navigate('/main/' + user.id);
+            //navigate('/main/' + user.id);
+            navigate('/blank');
         }catch(err){
             alert("LoginPage failed.\n\n" +
                 "Please try to login again")
@@ -45,13 +51,21 @@ export default function LoginPage() {
         navigate('/signup');
     }
 
+    async function clearUsers(){
+        let userCurrent = app.currentUser;
+        console.log('The current user is: ', userCurrent);
+        await app.removeUser(userCurrent);
+        userCurrent = app.currentUser;
+        console.log('Now the current user is: ', userCurrent);
+    }
+
     return (
         <Grid container justifyContent={"center"} alignItems={"center"} sx={{height: '100vh', backgroundImage: 'url(/bgimage.jpg)', backgroundSize: "cover"}}>
             <Grid item xs={1}></Grid>
             <Grid container spacing={0} justifyContent={"center"} alignItems={"center"} sx={{height: '90vh'}}>
                 <Box sx={{backgroundColor: 'white', borderRadius: '16px', boxShadow: 10, border: 1, display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', alignItems: 'center'}}>
                     <LocalPizzaIcon sx={{height: 100, width: 100, mt: 2}}/>
-                    <TextField onChange={handleEmailChange} value={email} sx={{m: 2, width: 300}} id="outlined-basic" label="Username" variant="outlined"/>
+                    <TextField onChange={handleEmailChange} value={email} sx={{m: 2, width: 300}} id="" label="Username" variant="outlined"/>
                     <TextField onChange={handlePasswordChange} value={password} type={'password'} sx={{m: 2, width: 300}} id="outlined-basic" label="Password" variant="outlined"/>
                     <Button onClick={handleClick} sx={{m: 3}} variant={"contained"} color={"success"}>Login</Button>
                     <Button onClick={signupClick} sx={{textTransform: 'capitalize', mb: 1}}>Create a free account!</Button>

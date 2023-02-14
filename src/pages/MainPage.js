@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import Box from "@mui/material/Box";
 import PizzaCards from "../comp/PizzaCards";
 import NewOrderDialog from "../comp/NewOrderDialog";
+import {useNavigate} from "react-router-dom";
 
 
 export default function MainPage({user}) {
@@ -13,6 +14,8 @@ export default function MainPage({user}) {
     const curUser = app.currentUser;
 
     const [pizzaHolder, setPizzaHolder] = useState([]);
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         loadPizzaCards();
@@ -35,13 +38,6 @@ export default function MainPage({user}) {
             console.log("Error", error);
         }
     }
-
-    // Removed signout button for now
-    /*function signoutClick(){
-        curUser.logOut();
-        //await app.removeUser(curUser);
-        navigate('/');
-    }*/
 
     return(
         <Box>

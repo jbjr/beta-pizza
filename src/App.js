@@ -16,6 +16,8 @@ import FunctionTests from "./unused/FunctionTests";
 import PromptCheckEmailResetPage from "./pages/PromptCheckEmailResetPage";
 import CompletePasswordResetPage from "./pages/CompletePasswordResetPage";
 import PasswordResetPage from "./pages/PasswordResetPage";
+import FixUsers from "./unused/FixUsers";
+import BlankPage from "./pages/BlankPage";
 
 function App() {
   return (
@@ -39,6 +41,8 @@ function App() {
           <Route exact path={'/confirm-account'} element={<ConfirmAccountPage/>}/>
           <Route exact path={'/update-password'} element={<CompletePasswordResetPage/>}/>
           <Route exact path={'/admin-page'} element={<AdminPage/>}/>
+          <Route exact path={'/fix'} element={<FixUsers/>}/>
+          <Route exact path={'/blank'} element={<BlankPage/>}/>
         </Routes>
       </BrowserRouter>
     </div>
