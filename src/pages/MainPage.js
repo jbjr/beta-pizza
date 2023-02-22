@@ -5,6 +5,11 @@ import Box from "@mui/material/Box";
 import PizzaCards from "../comp/PizzaCards";
 import NewOrderDialog from "../comp/NewOrderDialog";
 import {useNavigate} from "react-router-dom";
+import {Grid, Toolbar, Tooltip, Typography} from "@mui/material";
+import HeaderBar from "../comp/HeaderBar";
+import Button from "@mui/material/Button";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 
 export default function MainPage({user}) {
@@ -39,12 +44,16 @@ export default function MainPage({user}) {
         }
     }
 
+
     return(
-        <Box>
-            <Box sx={{minHeight: '100vh', backgroundColor: '#d7ccc8', display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                <NewOrderDialog/>
-                <PizzaCards items={pizzaHolder}></PizzaCards>
-            </Box>
-        </Box>
+        <Grid container justifyContent={"center"} alignItems={"center"} sx={{minHeight: '100vh',backgroundPosition: 'center', backgroundImage: 'url(/bgmedium.jpg)', backgroundSize: "cover"}}>
+            <Grid item>
+                <Box sx={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
+                    <NewOrderDialog/>
+                    <PizzaCards items={pizzaHolder}></PizzaCards>
+                </Box>
+            </Grid>
+
+        </Grid>
     )
 };

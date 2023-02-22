@@ -1,4 +1,4 @@
-import {Alert, Card, CardActions, CardContent, CardMedia, Snackbar, Typography} from "@mui/material";
+import {Alert, Card, CardActions, CardContent, CardMedia, Snackbar, Toolbar, Tooltip, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import {useState} from "react";
@@ -7,6 +7,8 @@ import * as Realm from "realm-web";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import HeaderBar from "./HeaderBar";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 export default function PizzaCards({items}){
 
@@ -67,16 +69,16 @@ export default function PizzaCards({items}){
     }
 
     return(
-        <Box sx={{boxShadow: 2}}>
+        <Box>
             <HeaderBar/>
             <Box sx={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', alignItems: 'center'}}>
                 {items.map(pizza => (
-                    <Card sx={{width: 300, m: 2, borderRadius: '10px', boxShadow: 5}} key={pizza.item_id}>
+                    <Card sx={{width: 300, m: 2, borderRadius: '10px', boxShadow: 10, backgroundColor: '#f9f9f9'}} key={pizza.item_id}>
                         <CardMedia sx={{height: 150}} image={pizza.img}/>
                         <CardContent sx={{height: 150}}>
-                            <Typography variant={'h5'} sx={{color: '#5d4037', fontWeight: 'bold'}}>{pizza.name}</Typography>
-                            <Typography variant={'caption'} sx={{color: '#5d4037'}}>{pizza.price}</Typography>
-                            <Typography variant={'body2'} sx={{color: '#5d4037'}}>{pizza.desc}</Typography>
+                            <Typography variant={'h5'} sx={{color: 'black', fontWeight: 'bold'}}>{pizza.name}</Typography>
+                            <Typography variant={'caption'} sx={{color: 'black'}}>{pizza.price}</Typography>
+                            <Typography variant={'body2'} sx={{color: 'black'}}>{pizza.desc}</Typography>
                         </CardContent>
                         <CardActions sx={{height: 40}}>
                             <Button onClick={addToOrder} value={pizza.item_id} sx={{fontWeight: 'bold'}}>Add to Order!</Button>

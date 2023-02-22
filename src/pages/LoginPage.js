@@ -60,7 +60,7 @@ export default function LoginPage() {
     }
 
     return (
-        <Grid container justifyContent={"center"} alignItems={"center"} sx={{height: '100vh', backgroundImage: 'url(/bgimage.jpg)', backgroundSize: "cover"}}>
+        <Grid container justifyContent={"center"} alignItems={"center"} sx={{height: '100vh',backgroundPosition: 'center', backgroundImage: 'url(/bgmedium.jpg)', backgroundSize: "cover"}}>
             <Grid item xs={1}></Grid>
             <Grid container spacing={0} justifyContent={"center"} alignItems={"center"} sx={{height: '90vh'}}>
                 <Box sx={{backgroundColor: 'white', borderRadius: '16px', boxShadow: 10, border: 1, display: 'flex', flexDirection: 'column', textAlign: 'center', justifyContent: 'center', alignItems: 'center'}}>
