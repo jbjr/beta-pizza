@@ -29,9 +29,9 @@ export default function AdminPage(){
 
     const [adminKey, setAdminKey] = useState('');
 
-    const [accountBalance, setAccountBalance] = useState(0);
-    const [salesBalance, setSalesBalance] = useState(0);
-    const [expenseBalance, setExpenseBalance] = useState(0);
+    const [accountBalance, setAccountBalance] = useState('');
+    const [salesBalance, setSalesBalance] = useState('');
+    const [expenseBalance, setExpenseBalance] = useState('');
     const [totalOrders, setTotalOrders] = useState(0)
     const [totalItemsOrdered, setTotalItemsOrdered] = useState(0);
     const [mostOrdered, setMostOrdered] = useState('');
@@ -59,25 +59,14 @@ export default function AdminPage(){
 
     async function updateBalances(){
         const financeCollection = getFinanceCollection(user);
+        const ordersCollection = getOrdersCollection(user);
         const resultAccount = await financeCollection.findOne({"type": "Account"})
         const resultSales = await financeCollection.findOne({"type": "Revenue"})
         const resultExpenses = await financeCollection.findOne({"type": "Expenses"})
-
-
-
-        setAccountBalance(resultAccount.value.toFixed(2));
-        setSalesBalance(resultSales.value.toFixed(2));
-        setExpenseBalance(resultExpenses.value.toFixed(2));
-
-        const ordersCollection = getOrdersCollection(user);
-        const queryOrders = {"status": "paid"};
-        const ordersCount = await ordersCollection.count(queryOrders);
-        setTotalOrders(ordersCount);
-
+        const ordersCount = await ordersCollection.count({"status": "paid"});
+        const resultOrders = await ordersCollection.find({"status": "paid"});
         let lineItemCount = 0;
         let mostPopular = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-        const resultOrders = await ordersCollection.find(queryOrders);
-        const pizzaCollection = await getPizzaCollection(user);
 
         resultOrders.forEach(pizzas => {
             pizzas.item.forEach(pizza => {
@@ -120,37 +109,24 @@ export default function AdminPage(){
                 }
             })
         })
-        setTotalItemsOrdered(lineItemCount);
-        console.log(Math.max(...mostPopular));
 
         let testIndex = mostPopular.indexOf(Math.max(...mostPopular));
-        console.log(testIndex);
-
         let tempMostOrderedTotal = Math.max(...mostPopular);
-
         let tempMostOrdered = pizzaCountSwitch(testIndex);
-        console.log('Most ordered Pizza:   ', tempMostOrdered);
 
+        setAccountBalance(resultAccount.value.toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
+        setSalesBalance(resultSales.value.toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
+        setExpenseBalance(resultExpenses.value.toLocaleString('en-US', {style: 'currency', currency: 'USD'}));
+        setTotalOrders(ordersCount);
+        setTotalItemsOrdered(lineItemCount);
         setMostOrdered(tempMostOrdered);
         setMostOrderedTotal(tempMostOrderedTotal);
-
-
-        let tester = [{
-            ATW: 41,
-            Boz: 10
-        }]
-        //console.log(Math.max(...tester));
-
     }
+
 
     return(
         <>
-            <Dialog
-                fullScreen
-                open={open}
-                onClose={handleClose}
-                sx={{}}
-            >
+            <Dialog fullScreen open={open} onClose={handleClose} sx={{}}>
                 <Box sx={{backgroundColor: '#e8eaf6', minHeight: '100vh', justifyContent: 'center', alignItems: 'center', display: 'flex', flexDirection: 'column'}}>
                     <Typography sx={{fontWeight: 'bold', color: '#1a237e'}} variant={'h5'}>Admin Verification</Typography>
                     <TextField onChange={handleChange} sx={{width: '300', m: 3, backgroundColor: 'white'}} value={adminKey} label="Admin Key" variant="outlined"></TextField>
@@ -173,15 +149,15 @@ export default function AdminPage(){
                 <Stack direction={'row'} sx={{justifyContent: 'center', alignItems: 'center'}}>
                     <Paper sx={{minWidth: 1/3, m: 1, px:5, py: 3, justifyContent: 'center', alignItems: 'center'}} elevation={5}>
                         <Typography sx={{fontWeight: 'bold'}}>Account Balance</Typography>
-                        <Typography>${accountBalance}</Typography>
+                        <Typography>{accountBalance}</Typography>
                     </Paper>
                     <Paper sx={{minWidth: 1/3, px: 5, py: 3, justifyContent: 'center', alignItems: 'center'}} elevation={5}>
                         <Typography sx={{fontWeight: 'bold'}}>Monthly Sales</Typography>
-                        <Typography>${salesBalance}</Typography>
+                        <Typography>{salesBalance}</Typography>
                     </Paper>
                     <Paper sx={{minWidth: 1/3, m: 1, px: 5, py: 3, justifyContent: 'center', alignItems: 'center'}} elevation={5}>
                         <Typography sx={{fontWeight: 'bold'}}>Monthly Expenses</Typography>
-                        <Typography>${expenseBalance}</Typography>
+                        <Typography>{expenseBalance}</Typography>
                     </Paper>
                 </Stack>
                 <Stack direction={'row'} sx={{justifyContent: 'center', alignItems: 'center'}}>
@@ -253,3 +229,6 @@ export default function AdminPage(){
             </>
     )
 };
+
+//const pizzaCollection = await getPizzaCollection(user);
+//const queryOrders = {"status": "paid"};

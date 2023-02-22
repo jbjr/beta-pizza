@@ -22,19 +22,19 @@ export default function HeaderBar(){
     }
 
     return(
-        <Box sx={{flexGrow: 1, backgroundColor: 'white', boxShadow: 3}}>
-            <Toolbar>
+        <Box sx={{flexGrow: 1}}>
+            <Toolbar sx={{}}>
                 <Tooltip title={"Logout"}>
                     <Button onClick={toLogin} sx={{mr: 2}}>
-                        <LogoutIcon sx={{color: '#5d4037'}}/>
+                        <LogoutIcon sx={{color: 'white'}}/>
                     </Button>
                 </Tooltip>
-                <Typography variant={"h6"} sx={{textAlign: 'center', flexGrow: 1, color: '#5d4037', fontWeight: 'bold'}}>
+                <Typography variant={"h6"} sx={{textAlign: 'center', flexGrow: 1, color: 'white', fontWeight: 'bold'}}>
                     Specialty Pizzas
                 </Typography>
                 <Tooltip title={"Cart"}>
                     <Button onClick={toCart}>
-                        <ShoppingCartIcon sx={{color: '#5d4037'}}/>
+                        <ShoppingCartIcon sx={{color: 'white'}}/>
                     </Button>
                 </Tooltip>
             </Toolbar>
