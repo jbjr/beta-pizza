@@ -1,4 +1,4 @@
-import {AppBar, Box, Button, Dialog, Grid, Paper, Stack, Toolbar, Typography} from "@mui/material";
+import {AppBar, Box, Button, Dialog, Grid, Paper, Stack, Toolbar, Tooltip, Typography} from "@mui/material";
 import PollIcon from '@mui/icons-material/Poll';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {useEffect, useState} from "react";
@@ -6,6 +6,10 @@ import * as Realm from "realm-web";
 import {getFinanceCollection, getOrdersCollection, pizzaCountSwitch} from "../comp/helper";
 import TextField from "@mui/material/TextField";
 import UpdateIcon from '@mui/icons-material/Update';
+import Timer10Icon from '@mui/icons-material/Timer10';
+import MoreTimeIcon from '@mui/icons-material/MoreTime';
+import SpeedSlowIcon from "../comp/icons/SpeedSlowIcon";
+import SpeedFastIcon from "../comp/icons/SpeedFastIcon";
 
 export default function AdminPageTwo(){
 
@@ -38,8 +42,14 @@ export default function AdminPageTwo(){
         //await updateBalances();
     }
 
+
+
     useEffect(() => {
-        updateBalances();
+        const interval = setInterval(() => {
+            updateBalances();
+        }, 60000);
+
+        return () => clearInterval(interval);
 
     }, []);
 
@@ -50,6 +60,8 @@ export default function AdminPageTwo(){
     const [totalItemsOrdered, setTotalItemsOrdered] = useState();
     const [totalAverage, setTotalAverage] = useState();
     const [itemAverage, setItemAverage] = useState();
+    const [time, setTime] = useState('1800');
+
 
     async function updateBalances(){
         const financeCollection = getFinanceCollection(user);
@@ -83,13 +95,22 @@ export default function AdminPageTwo(){
         setItemAverage(tempItemAverage.toFixed(2));
     }
 
-    const inventory = "https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3bf7b-26ab-41e1-8a2e-981f339bbce5&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"
-    const pizzaRunningTotal = "https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3cbbe-d44f-43de-8cb5-6f713aea50c5&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"
-    const totalRunningTotal = "https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3cca4-ad08-4cd4-89c5-243a65ef9b6d&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"
-    const totalPerPizza = "https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3b7f0-26ab-4d47-8b32-981f3392dae3&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"
-    const ordersPerDayofWeek = "https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3bb8f-045a-493e-8628-514e7d55255a&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"
-    const totalPerDayofWeek = "https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3bcd7-742a-48a4-82a2-a318dfc90134&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"
-    const pizzaPerDayofWeek = "https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3ba91-ace8-4052-83d2-2aca35a56c86&maxDataAge=3600&theme=dark&autoRefresh=true&attribution=false"
+    function updateEveryTen(){
+        setTime("30");
+    }
+
+    function updateEveryThirtyMin(){
+        setTime("1800");
+    }
+
+    //const time = "3600";
+    const inventory = `https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3bf7b-26ab-41e1-8a2e-981f339bbce5&maxDataAge=${time}&theme=dark&autoRefresh=true&attribution=false`
+    const pizzaRunningTotal = `https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3cbbe-d44f-43de-8cb5-6f713aea50c5&maxDataAge=${time}&theme=dark&autoRefresh=true&attribution=false`
+    const totalRunningTotal = `https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3cca4-ad08-4cd4-89c5-243a65ef9b6d&maxDataAge=${time}&theme=dark&autoRefresh=true&attribution=false`
+    const totalPerPizza = `https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3b7f0-26ab-4d47-8b32-981f3392dae3&maxDataAge=${time}&theme=dark&autoRefresh=true&attribution=false`
+    const ordersPerDayofWeek = `https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3bb8f-045a-493e-8628-514e7d55255a&maxDataAge=${time}&theme=dark&autoRefresh=true&attribution=false`
+    const totalPerDayofWeek = `https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3bcd7-742a-48a4-82a2-a318dfc90134&maxDataAge=${time}&theme=dark&autoRefresh=true&attribution=false`
+    const pizzaPerDayofWeek = `https://charts.mongodb.com/charts-project-0-llsqu/embed/charts?id=63f3ba91-ace8-4052-83d2-2aca35a56c86&maxDataAge=${time}&theme=dark&autoRefresh=true&attribution=false`
 
     return(
         <Grid container justifyContent={'center'} alignItems={'flex-start'} sx={{minHeight: '100vh', backgroundColor: '#424242', p: .5}}>
@@ -101,7 +122,7 @@ export default function AdminPageTwo(){
                 </Box>
             </Dialog>
             <Grid item xs={12}>
-                <Grid container justifyContent={'center'} alignItems={'flex-start'} sx={{backgroundColor: '#757575', boxShadow: 10}}>
+                <Grid container justifyContent={'center'} alignItems={'flex-start'} sx={{backgroundColor: '#bdbdbd', boxShadow: 10}}>
                     <Grid item xs={12}>
                         <Box sx={{mb: 2, flexGrow: 1 }}>
                             <AppBar position="static" sx={{ backgroundColor: '#21313C'}}>
@@ -109,7 +130,9 @@ export default function AdminPageTwo(){
                                     <Typography variant="h6" component="div" sx={{fontWeight: 'bold', color: 'white', flexGrow: 1}}>
                                         ADMIN DASHBOARD
                                     </Typography>
-                                    <Button onClick={updateBalances} sx={{color: 'white'}}><UpdateIcon/></Button>
+                                    <Tooltip title={'Update charts every 30 minutes'}><Button onClick={updateEveryThirtyMin} sx={{color: 'white'}}><SpeedSlowIcon/></Button></Tooltip>
+                                    <Tooltip title={'Update charts every 10 seconds'}><Button onClick={updateEveryTen} sx={{color: 'white'}}><SpeedFastIcon/></Button></Tooltip>
+                                    <Tooltip title={'Update balances. (Current automatic refresh is 60 seconds).'}><Button onClick={updateBalances} sx={{color: 'white'}}><UpdateIcon/></Button></Tooltip>
                                     <Button href={'/'} sx={{color: 'white'}}><ExitToAppIcon/></Button>
                                 </Toolbar>
                             </AppBar>
